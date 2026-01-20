@@ -2,9 +2,11 @@ module example/hello_go
 
 go 1.25.6
 
-require rsc.io/quote v1.5.2
+require github.com/openai/openai-go/v3 v3.16.0
 
 require (
-	golang.org/x/text v0.0.0-20170915032832-14c0d48ead0c // indirect
-	rsc.io/sampler v1.3.0 // indirect
+	github.com/tidwall/gjson v1.18.0 // indirect
+	github.com/tidwall/match v1.1.1 // indirect
+	github.com/tidwall/pretty v1.2.1 // indirect
+	github.com/tidwall/sjson v1.2.5 // indirect
 )
