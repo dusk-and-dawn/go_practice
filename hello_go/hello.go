@@ -55,13 +55,16 @@ func main() {
 		resp, err := client.Responses.New(
 			context.TODO(),
 			responses.ResponseNewParams{
-				Model: "gpt-5-nano",
+				Model: "gpt-5.2",
 				Input: responses.ResponseNewParamsInputUnion{OfString: openai.String(context2 + "" + text)},
 			})
 		if err != nil {
 			panic(err.Error())
 		}
 		fmt.Println(resp.OutputText())
+		fmt.Println(resp.Usage.InputTokens)
+		fmt.Println(resp.Usage.OutputTokens)
+		//fmt.Println((resp.Usage.OutputTokens * (0.40 * 0.000001 1000000)) + (resp.Usage.InputTokens * (0.05 / 1000000) ))
 		// fmt.Fprintf(w, "got: %q\n", resp.OutputText())
 
 		var tmpl = template.Must(
