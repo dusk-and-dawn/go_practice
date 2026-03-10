@@ -20,6 +20,7 @@ import (
 )
 
 type ExecuteRequest struct {
+	Model    string         `json:"model,omitempty"`
 	Action   string         `json:"action"`
 	Input    map[string]any `json:"input"`
 	Options  map[string]any `json:"options,omitempty"`
@@ -48,8 +49,8 @@ func NewGateway(apiKey string) *Gateway {
 	client := openai.NewClient(option.WithAPIKey(apiKey))
 
 	g := &Gateway{
-		client:   &client,
-		model:    "gpt-5.2",
+		client: &client,
+		//model:    selectedModel, //"gpt-5.2",
 		apiKey:   apiKey,
 		handlers: map[string]Handler{},
 	}
@@ -80,8 +81,13 @@ func (g *Gateway) handleOptimizeTeamDescription(ctx context.Context, req Execute
 
 	input := system + "\n\nUser prompt:\n" + raw
 
+	modelToUse := req.Model
+	if modelToUse == "" {
+		modelToUse = "gpt-5.2" // Fallback default
+	}
+
 	resp, err := g.client.Responses.New(ctx, responses.ResponseNewParams{
-		Model: g.model,
+		Model: modelToUse,
 		Input: responses.ResponseNewParamsInputUnion{
 			OfString: openai.String(input),
 		},

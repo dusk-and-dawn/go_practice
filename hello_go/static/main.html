@@ -10,7 +10,30 @@
     <h1 class="title">Let's celebrate how awesome go is</h1>
     <form method="POST" action="/submit">
         <input class="input" type="text" name="optimizable_text">
+        <label for="model-select">Choose which model to prompt</label>>
+        <select name="model" id="model-select">
+          <option value="">Please pick a model</option>
+          <option value="gpt-5.2">gpt-5.2</option>
+          <option value="gpt-4o">gpt-4o</option>
+          <option value="gpt-3.5">gpt-3.5</option>
+        </select>
+        <br>
         <button class="button" type="submit">optimize me baby</button>
     </form>
   </body>  
+  <script>
+    async function updateModel() {
+    const selectedModel = document.getElementById('model-select').value;
+
+    const response = await fetch('/api/initialize-gateway', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: selectedModel })
+      });
+
+    if (response.ok) {
+        console.log("Gateway updated to:", selectedModel);
+      }
+    }
+  </script>
 </html>
