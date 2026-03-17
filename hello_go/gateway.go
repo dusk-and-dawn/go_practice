@@ -197,36 +197,6 @@ func main() {
 
 	mux.HandleFunc("/v1/ai/execute", gw.handleExecuteHTTP)
 
-	// mux.HandleFunc("/v1/ai/execute", func(w http.ResponseWriter, r *http.Request) {
-	// 	traceID := newTraceID()
-	// 	start := time.Now()
-
-	// 	if r.Method != http.MethodPost {
-	// 		http.Error(w, "method not allowed", http.StatusMethodNotAllowed)
-	// 		return
-	// 	}
-
-	// 	var req ExecuteRequest
-	// 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-	// 		http.Error(w, "invalid JSON", http.StatusBadRequest)
-	// 		return
-	// 	}
-
-	// 	ctx := r.Context()
-	// 	resp, err := gw.Execute(ctx, req)
-	// 	if err != nil {
-	// 		log.Printf("[%s] action=%s error=%v", traceID, req.Action, err)
-	// 		http.Error(w, err.Error(), http.StatusBadRequest)
-	// 		return
-	// 	}
-
-	// 	resp.TraceID = traceID
-	// 	w.Header().Set("Content-Type", "application/json")
-	// 	_ = json.NewEncoder(w).Encode(resp)
-
-	// 	log.Printf("[%s] action=%s ms=%d", traceID, req.Action, time.Since(start).Milliseconds())
-	// })
-
 	addr := ":8080"
 	log.Printf("AI Gateway listening on %s", addr)
 	log.Fatal(http.ListenAndServe(addr, mux))
